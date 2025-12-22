@@ -1,594 +1,319 @@
-# Project: [Your Project Name]
+# Project Context for Claude Code
 
-<!-- 
-  CLAUDE.md - Your Project's AI Context
-  This file helps Claude Code understand your project.
-  Update this as your project evolves.
-  
-  TIP: Keep this file under 500 lines for best results.
-  For longer documentation, split into multiple files and import them:
-  @.claude/architecture.md
-  @.claude/api-docs.md
--->
+> This file helps Claude understand your project. Place it in your project root as `CLAUDE.md`
+> Updated for Claude Code v2.0.70+ (December 2025)
 
 ---
 
 ## Project Overview
 
-<!-- Brief description (2-3 sentences) -->
-[Your app name] is a [type of application] that [main purpose].
-
-**Status**: [In Development / Production / MVP]  
-**Team**: [Solo / Team of X]  
-**Deployment**: [Where deployed - Vercel, AWS, etc.]
+**Name**: [Your Project Name]  
+**Description**: [Brief description of what this project does]  
+**Status**: [In Development / Production / Maintenance]
 
 ---
 
 ## Tech Stack
 
-### Core Technologies
-- **Framework**: [Next.js 14, Express, Django, etc.]
-- **Language**: [TypeScript, Python, etc.]
-- **Database**: [PostgreSQL, MongoDB, etc.]
-- **ORM/Query Builder**: [Prisma, Drizzle, SQLAlchemy, etc.]
-- **Styling**: [Tailwind CSS, Styled Components, etc.]
-- **State Management**: [Zustand, Redux, Context API, etc.]
-
-### Infrastructure
-- **Hosting**: [Vercel, AWS, Railway, etc.]
-- **Database Hosting**: [Supabase, PlanetScale, RDS, etc.]
-- **Cache**: [Redis, Upstash, etc.]
-- **File Storage**: [S3, Cloudflare R2, etc.]
-- **Auth**: [NextAuth, Clerk, Supabase Auth, etc.]
-
-### Development
-- **Testing**: [Jest, Vitest, Pytest, etc.]
-- **Linting**: [ESLint, Prettier, Ruff, etc.]
-- **Type Checking**: [TypeScript, Pydantic, etc.]
-- **Build Tool**: [Vite, Webpack, esbuild, etc.]
-
-### Notable Dependencies
-- [List key dependencies and why they're important]
-- [Example: `react-hook-form` - All forms use this]
-- [Example: `zod` - Runtime validation everywhere]
+**Language**: [e.g., TypeScript, Python, Rust]  
+**Framework**: [e.g., React, Django, Actix]  
+**Database**: [e.g., PostgreSQL, MongoDB]  
+**Testing**: [e.g., Jest, Pytest, Cargo test]  
+**Build Tool**: [e.g., Vite, Webpack, Cargo]
 
 ---
 
 ## Project Structure
 
 ```
-src/
-├── app/                    # Next.js app directory
-│   ├── api/               # API routes
-│   ├── (auth)/            # Auth route group
-│   └── (dashboard)/       # Dashboard route group
-├── components/
-│   ├── ui/                # Shadcn/ui components
-│   ├── features/          # Feature-specific components
-│   └── layouts/           # Layout components
-├── lib/
-│   ├── db/                # Database utilities
-│   ├── auth/              # Auth utilities
-│   ├── api/               # API client
-│   └── utils/             # General utilities
-├── hooks/                 # Custom React hooks
-├── types/                 # TypeScript type definitions
-└── styles/                # Global styles
-
-[Adjust based on your framework]
-```
-
-### Key Directories Explained
-- **`app/api/`**: [Explanation of API route organization]
-- **`components/features/`**: [Feature-based component organization]
-- **`lib/`**: [Shared utilities and configurations]
-
----
-
-## Code Standards
-
-### File Naming Conventions
-
-**Components**
-- React Components: `PascalCase.tsx`
-- Vue Components: `PascalCase.vue`
-- Example: `UserProfile.tsx`, `DashboardLayout.tsx`
-
-**Utilities & Hooks**
-- Utilities: `camelCase.ts`
-- Hooks: `camelCase.ts` with "use" prefix
-- Example: `formatDate.ts`, `useUserData.ts`
-
-**Types**
-- Type Files: `PascalCase.types.ts`
-- Example: `User.types.ts`, `ApiResponse.types.ts`
-
-**Tests**
-- Test Files: `[filename].test.ts(x)`
-- Example: `UserProfile.test.tsx`, `formatDate.test.ts`
-
-### TypeScript Guidelines
-
-```typescript
-// ✅ DO: Use interfaces for objects
-interface UserProps {
-  name: string;
-  email: string;
-}
-
-// ✅ DO: Props interface directly above component
-interface ButtonProps {
-  variant: 'primary' | 'secondary';
-  children: React.ReactNode;
-}
-
-export function Button({ variant, children }: ButtonProps) {
-  // Component implementation
-}
-
-// ✅ DO: Use const assertions for literal types
-const USER_ROLES = ['admin', 'user', 'guest'] as const;
-
-// ❌ DON'T: Use 'any' type
-// Instead use 'unknown' or proper types
-
-// ❌ DON'T: Mix interfaces and types randomly
-// Pick one pattern and stick to it
-```
-
-### Component Guidelines
-
-```typescript
-// ✅ DO: Functional components only
-export function UserCard({ user }: UserCardProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  return (/* ... */);
-}
-
-// ❌ DON'T: Class components
-// We don't use class components in this project
-
-// ✅ DO: Keep components under 150 lines
-// If larger, extract sub-components or hooks
-
-// ✅ DO: Co-locate related files
-UserCard/
-├── UserCard.tsx
-├── UserCard.test.tsx
-├── UserCard.types.ts
-└── useUserCard.ts
-```
-
-### Import Organization
-
-```typescript
-// ✅ DO: Organize imports in this order:
-// 1. React/framework imports
-import { useState, useEffect } from 'react';
-
-// 2. Third-party imports
-import { z } from 'zod';
-import { motion } from 'framer-motion';
-
-// 3. Internal imports (absolute)
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/hooks/useAuth';
-
-// 4. Relative imports
-import { UserCard } from './UserCard';
-
-// 5. Types (separate)
-import type { User } from '@/types';
-```
-
-### API Design
-
-**Endpoints**
-```
-✅ DO:
-GET    /api/users
-GET    /api/users/:id
-POST   /api/users
-PATCH  /api/users/:id
-DELETE /api/users/:id
-
-❌ DON'T:
-/api/getUsers
-/api/createUser
-/api/deleteUser
-```
-
-**Response Format**
-```typescript
-// ✅ DO: Use consistent response envelope
-interface ApiResponse<T> {
-  success: boolean;
-  data?: T;
-  error?: {
-    code: string;
-    message: string;
-    details?: unknown;
-  };
-  meta?: {
-    timestamp: string;
-    requestId: string;
-  };
-}
-```
-
-### Error Handling
-
-```typescript
-// ✅ DO: Use custom error classes
-class ValidationError extends Error {
-  constructor(message: string, public details?: unknown) {
-    super(message);
-    this.name = 'ValidationError';
-  }
-}
-
-// ✅ DO: Handle errors at boundaries
-try {
-  await riskyOperation();
-} catch (error) {
-  if (error instanceof ValidationError) {
-    // Handle validation errors
-  }
-  // Log and rethrow or handle gracefully
-  logger.error(error);
-  throw error;
-}
-```
-
-### Database Conventions
-
-```typescript
-// ✅ DO: Use Prisma schema naming
-model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-}
-
-// ✅ DO: Include audit fields
-// createdAt, updatedAt on all models
-
-// ✅ DO: Use appropriate indexes
-@@index([email])
-@@index([createdAt])
+project-root/
+├── src/                    # Source code
+│   ├── components/         # React components
+│   ├── utils/              # Utility functions
+│   └── index.ts            # Main entry point
+├── tests/                  # Test files
+├── docs/                   # Documentation
+├── .claude/                # Claude Code configuration
+│   ├── CLAUDE.md           # This file
+│   ├── rules/              # 🆕 Coding standards (optional)
+│   ├── commands/           # Custom slash commands (optional)
+│   └── agents/             # Custom agents (optional)
+└── package.json            # Dependencies
 ```
 
 ---
 
-## Testing Standards
+## Key Files
 
-### Testing Approach
-- **Unit Tests**: All utility functions and hooks
-- **Integration Tests**: All API endpoints
-- **E2E Tests**: Critical user flows only
+- **Main Entry**: `src/index.ts`
+- **Config**: `config/app.json`
+- **API Routes**: `src/routes/`
+- **Database Models**: `src/models/`
 
-### Coverage Requirements
-- **Utilities**: 100% coverage
-- **Components**: 80% coverage
-- **API Routes**: 90% coverage
-- **Overall**: Minimum 80% coverage
+---
+
+## Development Commands
+
+```bash
+# Development
+npm run dev              # Start dev server (http://localhost:3000)
+npm run build            # Build for production
+npm test                 # Run tests
+npm run lint             # Lint code
+
+# Testing
+npm run test:unit        # Unit tests only
+npm run test:integration # Integration tests
+npm run test:e2e         # End-to-end tests
+
+# Database
+npm run db:migrate       # Run migrations
+npm run db:seed          # Seed database
+```
+
+---
+
+## Coding Standards
+
+### General Rules
+- Use TypeScript strict mode
+- Write tests for all new features
+- Follow existing code style
+- Comment complex logic
+
+### 🆕 Detailed Rules
+For complete coding standards, see: `.claude/rules/`
+- `coding-style.md` - Style guidelines
+- `testing.md` - Test requirements
+- `security.md` - Security rules
+
+### Naming Conventions
+- **Files**: `kebab-case.ts`
+- **Components**: `PascalCase`
+- **Functions**: `camelCase`
+- **Constants**: `UPPER_SNAKE_CASE`
+
+### Code Style
+- Max line length: 100 characters
+- Indentation: 2 spaces
+- Quotes: Single quotes for strings
+- Semicolons: Required
+
+---
+
+## Testing Guidelines
 
 ### Test Structure
 ```typescript
-describe('UserCard', () => {
-  // ✅ DO: Use describe blocks for organization
-  describe('when user is authenticated', () => {
-    it('should display user information', () => {
-      // Arrange
-      const user = mockUser();
-      
-      // Act
-      render(<UserCard user={user} />);
-      
-      // Assert
-      expect(screen.getByText(user.name)).toBeInTheDocument();
-    });
+describe('ComponentName', () => {
+  it('should do something specific', () => {
+    // Arrange
+    const input = 'test';
+    
+    // Act
+    const result = functionUnderTest(input);
+    
+    // Assert
+    expect(result).toBe('expected');
   });
 });
 ```
 
----
-
-## Development Workflow
-
-### Before Making Changes
-1. **Read existing code** to understand patterns
-2. **Check for similar implementations** to maintain consistency
-3. **Create a plan** for complex features
-4. **Write tests first** for new functionality (TDD when possible)
-
-### During Development
-1. **Make small, focused commits**
-2. **Run tests continuously** (`npm run test:watch`)
-3. **Format code** before committing (`npm run format`)
-4. **Type-check** regularly (`npm run type-check`)
-
-### After Changes
-1. **Run full test suite** (`npm test`)
-2. **Build locally** to catch build errors (`npm run build`)
-3. **Update documentation** if behavior changed
-4. **Self-review** diff before committing
+### Coverage Requirements
+- Minimum 80% code coverage
+- Test all edge cases
+- Test error conditions
+- Mock external dependencies
 
 ---
 
-## Available Commands
+## Common Tasks
 
-### Development
-```bash
-npm run dev           # Start development server (localhost:3000)
-npm run dev:debug     # Start with debugging enabled
-npm run studio        # Open Prisma Studio (database GUI)
-```
+### Adding a New Feature
+1. Create feature branch: `git checkout -b feature/feature-name`
+2. Write tests first (TDD)
+3. Implement feature
+4. Ensure tests pass: `npm test`
+5. Lint code: `npm run lint`
+6. Commit with clear message
+7. Create PR
 
-### Testing
-```bash
-npm test              # Run all tests
-npm run test:watch    # Run tests in watch mode
-npm run test:coverage # Generate coverage report
-npm run test:e2e      # Run E2E tests (requires dev server)
-```
+### Fixing a Bug
+1. Create bug branch: `git checkout -b fix/bug-name`
+2. Write failing test that reproduces bug
+3. Fix the bug
+4. Ensure test passes
+5. Check for regressions: `npm test`
+6. Commit and create PR
 
-### Building
-```bash
-npm run build         # Production build
-npm run start         # Start production server
-npm run build:analyze # Analyze bundle size
+### Code Review Checklist
+- [ ] Tests pass
+- [ ] Code is linted
+- [ ] No console.logs or debugger statements
+- [ ] Error handling is proper
+- [ ] Documentation is updated
+- [ ] No security vulnerabilities
+
+---
+
+## Important Context
+
+### Authentication
+- Using JWT tokens
+- Tokens expire after 24 hours
+- Refresh tokens stored in httpOnly cookies
+
+### API Design
+- RESTful endpoints
+- Use proper HTTP methods (GET, POST, PUT, DELETE)
+- Return consistent error format:
+```json
+{
+  "error": "Error message",
+  "code": "ERROR_CODE",
+  "details": {}
+}
 ```
 
 ### Database
+- Use transactions for multi-step operations
+- Always validate input before queries
+- Use prepared statements (prevents SQL injection)
+
+---
+
+## Environment Variables
+
+Required environment variables:
 ```bash
-npx prisma generate        # Generate Prisma Client
-npx prisma migrate dev     # Create and apply migration
-npx prisma migrate deploy  # Apply migrations (production)
-npx prisma db push         # Push schema without migration
-npx prisma db seed         # Seed database
+DATABASE_URL=postgresql://localhost:5432/dbname
+JWT_SECRET=your-secret-key
+API_KEY=your-api-key
+NODE_ENV=development|production
 ```
 
-### Code Quality
+---
+
+## Common Issues & Solutions
+
+### Issue: Tests failing locally
+**Solution**: Clear node_modules and reinstall
 ```bash
-npm run lint          # Run ESLint
-npm run lint:fix      # Fix auto-fixable issues
-npm run format        # Format with Prettier
-npm run type-check    # TypeScript type checking
+rm -rf node_modules package-lock.json
+npm install
+npm test
+```
+
+### Issue: Database connection errors
+**Solution**: Check DATABASE_URL and ensure PostgreSQL is running
+```bash
+pg_ctl status
+npm run db:migrate
+```
+
+### Issue: Build fails
+**Solution**: Check for TypeScript errors
+```bash
+npm run type-check
 ```
 
 ---
 
-## Important Patterns & Conventions
+## 🆕 Using Claude Code Features (December 2025)
 
-### Authentication
-- All protected routes use `middleware.ts`
-- Session stored in httpOnly cookie
-- JWT tokens expire in 7 days
-- Refresh tokens stored in database
-
-### API Routes
-- All routes return standardized ApiResponse
-- Use Zod for input validation
-- Error codes follow format: `CATEGORY_NUMBER`
-  - `AUTH_001`: Invalid credentials
-  - `VAL_001`: Validation error
-  - `DB_001`: Database error
-
-### State Management
-- Server state: React Query (TanStack Query)
-- Client state: Zustand stores
-- Form state: React Hook Form
-- URL state: Next.js router
-
-### Styling
-- Use Tailwind utility classes
-- Custom components in `components/ui/`
-- Dark mode via next-themes
-- Responsive: mobile-first approach
-
----
-
-## Current Context
-
-### Current Sprint/Focus
-<!-- Update this regularly -->
-**Current**: Building user authentication system  
-**Next Up**: Dashboard with analytics  
-**Backlog**: Payment integration
-
-### Recent Major Changes
-<!-- Keep last 3-5 significant changes -->
-- [Date]: Migrated from Pages Router to App Router
-- [Date]: Switched from REST to tRPC
-- [Date]: Implemented new design system
-
-### Known Issues
-<!-- Document current bugs or limitations -->
-- [ ] Email verification sometimes delayed
-- [ ] Dark mode flickers on page load
-- [ ] File upload limited to 10MB (by design)
-
-### Technical Debt
-<!-- Track what needs refactoring -->
-- [ ] Refactor auth middleware (too complex)
-- [ ] Extract shared API logic to utilities
-- [ ] Update deprecated dependencies
-
----
-
-## Security Considerations
-
-### Never Commit
-- `.env` files (add to .gitignore)
-- API keys or secrets
-- Database credentials
-- Private keys
-
-### Security Rules
-- Always validate user input
-- Sanitize data before database operations
-- Use parameterized queries (Prisma does this)
-- Never trust client-side data
-- Rate limit public endpoints
-- Use HTTPS in production
-
-### Authentication
-- Passwords hashed with bcrypt (cost: 10)
-- JWT secrets in environment variables
-- Implement CSRF protection
-- Use secure session cookies
-
----
-
-## Performance Considerations
-
-### Core Web Vitals Targets
-- **LCP**: < 2.5s
-- **FID**: < 100ms
-- **CLS**: < 0.1
-
-### Optimization Guidelines
-- Use Next.js Image component for all images
-- Lazy load below-the-fold components
-- Implement infinite scroll for large lists
-- Cache API responses with React Query
-- Use dynamic imports for code splitting
-
----
-
-## Deployment
-
-### Environments
-- **Development**: localhost:3000
-- **Preview**: [Vercel preview URLs]
-- **Production**: [your-production-url.com]
-
-### Environment Variables Required
+### Named Sessions
+Name your sessions for easy resuming:
 ```bash
-# Database
-DATABASE_URL=
-
-# Authentication
-NEXTAUTH_SECRET=
-NEXTAUTH_URL=
-
-# API Keys
-STRIPE_SECRET_KEY=
-SENDGRID_API_KEY=
-
-# [Add your required env vars]
+/rename feature-auth-implementation
+# Later: claude --resume feature-auth-implementation
 ```
 
-### Deployment Checklist
-- [ ] All tests passing
-- [ ] Build succeeds locally
-- [ ] Environment variables configured
-- [ ] Database migrations applied
-- [ ] No console errors in production build
+### Background Tasks
+Run long tasks in background:
+```bash
+& npm test          # Run tests while you continue working
+& npm run build     # Build in background
+```
+
+### LSP Integration
+Claude can now navigate code like an IDE:
+```
+"Find all references to authenticateUser"
+"Show me where UserConfig is defined"
+```
+
+### Model Selection
+- Use **Opus 4.5** for complex architecture decisions
+- Use **Sonnet 4.5** for regular development
+- Switch models: Alt+P (Option+P on Mac)
 
 ---
 
-## Team Conventions
-
-<!-- Customize this section for your team -->
-
-### Code Review Standards
-- All PRs require 2 approvals
-- Tests must pass CI
-- No console.logs in production code
-- Must update CLAUDE.md if patterns change
+## Git Workflow
 
 ### Branch Naming
-```
-feature/add-user-authentication
-bugfix/fix-login-redirect
-hotfix/critical-payment-issue
-refactor/simplify-api-layer
-```
+- `feature/` - New features
+- `fix/` - Bug fixes
+- `refactor/` - Code refactoring
+- `docs/` - Documentation updates
 
 ### Commit Messages
 ```
-feat: add user authentication
-fix: resolve login redirect issue
-docs: update API documentation
-refactor: simplify database queries
-test: add integration tests for auth
+type(scope): description
+
+- feat(auth): add JWT refresh token flow
+- fix(api): handle null user in getUserData
+- refactor(db): optimize query performance
+- docs(readme): update installation steps
 ```
 
 ---
 
-## Additional Resources
+## Resources
 
-### Internal Documentation
-- Architecture Diagrams: [Link or @.claude/architecture.md]
-- API Documentation: [Link or @.claude/api-docs.md]
-- Database Schema: [Link or @.claude/database-schema.md]
-- Design System: [Figma link or @.claude/design-system.md]
-
-### External Resources
-- [Framework Documentation]
-- [Key Library Documentation]
-- [Team Wiki/Notion]
+- **API Documentation**: `docs/api.md`
+- **Architecture Docs**: `docs/architecture.md`
+- **Deployment Guide**: `docs/deployment.md`
+- **Team Wiki**: [link to wiki]
 
 ---
 
-## Import Additional Context
+## Notes for Claude
 
-<!-- Use @ syntax to import other markdown files -->
-<!-- These files will be loaded when Claude Code starts -->
-
-@.claude/architecture.md
-@.claude/api-conventions.md
-@.claude/database-schema.md
-
-<!-- Create separate files for:
-  - Detailed architecture
-  - API conventions and endpoints
-  - Database schema and relationships
-  - Deployment procedures
-  - Team-specific guidelines
--->
-
----
-
-## Notes for Claude Code
-
-<!-- Specific instructions for Claude when working on this project -->
-
-### When Creating New Features
-1. Always check CLAUDE.md for patterns first
-2. Create tests before implementation
-3. Follow the project structure exactly
-4. Use existing utilities instead of reinventing
-5. Match the code style of surrounding files
-
-### When Refactoring
-1. Ensure all tests pass before starting
-2. Make changes incrementally
-3. Keep tests passing throughout
-4. Update documentation if behavior changes
+### When Writing Code
+- Follow the coding standards above
+- Write tests before implementation (TDD)
+- Use TypeScript types strictly
+- Handle errors gracefully
+- Add comments for complex logic
 
 ### When Reviewing Code
-1. Check for security issues first
-2. Verify tests are comprehensive
-3. Ensure code follows project patterns
-4. Confirm no hardcoded secrets
-5. Validate error handling
+- Check for security vulnerabilities
+- Verify error handling
+- Ensure tests cover edge cases
+- Look for performance issues
+- Validate against coding standards
+
+### When Debugging
+- Ask to see relevant test failures
+- Check recent changes in git
+- Review error logs
+- Test edge cases
 
 ---
 
 **Last Updated**: [Date]  
-**Maintained By**: [Your name/team]  
-**Version**: [Semantic version]
+**Maintained By**: [Your Name/Team]  
+**Claude Code Version**: v2.0.70+
 
-<!-- 
-  MAINTENANCE TIPS:
-  - Update this after major architectural changes
-  - Review monthly for accuracy
-  - Keep under 500 lines (split if longer)
-  - Version control this file
-  - Share updates with team
--->
+---
+
+## 🆕 December 2025 Features Used
+
+This project uses:
+- ✅ Named Sessions (`/rename`)
+- ✅ Background Agents (`& command`)
+- ✅ LSP Integration (automatic)
+- ✅ .claude/rules/ directory
+- ✅ Opus 4.5 for architecture
+- ✅ /stats for usage tracking

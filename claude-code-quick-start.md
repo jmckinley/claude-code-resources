@@ -1,346 +1,305 @@
-# Claude Code Quick Start Cheat Sheet
+# Claude Code Quick Start - December 2025
 
-**Version**: v1.0.124+ | **Updated**: November 2025 | **Print this for reference!**
+> One-page reference for Claude Code essentials
+
+**Updated**: December 2025 | **Version**: 2.0.70+
 
 ---
 
-## 🚀 Installation
+## Installation
 
 ```bash
-# Install
 npm install -g @anthropic-ai/claude-code
-
-# Start
-claude
-
-# Choose: Claude Max, Pro, or API key
+claude --version
 ```
 
 ---
 
-## ⚡ Your First 5 Commands
+## Essential Commands
 
+### Session Management 🆕
 ```bash
-# 1. Check status
-/status
-
-# 2. Get help
-/help
-
-# 3. Clear context between features
-/clear
-
-# 4. Roll back mistakes
-/rewind
-
-# 5. View available commands
-# (Tab completion works!)
+/rename my-feature          # Name current session
+/resume my-feature          # Resume by name
+claude --resume my-feature  # Resume from command line
 ```
 
----
-
-## 📝 Essential Workflow
-
-### The Golden Pattern
-
+### Core Commands
 ```bash
-# 1. Start on feature branch
-git checkout -b feature/my-feature
-
-# 2. Start Claude
-claude
-
-# 3. Ask for a plan first
-> Create a plan to implement user authentication
-
-# 4. Review plan, then implement
-> That plan looks good, let's implement it
-
-# 5. Create checkpoints
-> Create a checkpoint "auth complete"
-
-# 6. Test continuously
-> Run all tests
-
-# 7. Commit often
-git add .
-git commit -m "Implement auth"
-
-# 8. Clear between features
-/clear
+/clear                      # Clear conversation
+/help                       # Show help
+/context                    # Show current context
+/config                     # Open configuration
+/stats                      # Usage statistics 🆕
 ```
 
----
-
-## 🎯 Context Management
-
-| Context | Action |
-|---------|--------|
-| 0-30% | ✅ Work freely |
-| 30-50% | ⚠️ Plan carefully |
-| 50-80% | 🔶 Watch closely |
-| 80%+ | 🚨 `/compact` or `/clear` |
-
+### Model Selection
 ```bash
-# Check often!
-/status
+Alt+P (Option+P on Mac)     # Switch models while typing 🆕
+/model                      # Change model
+```
+
+### Planning
+```bash
+Shift+Tab (twice)           # Enter plan mode
+Shift+Tab                   # Exit plan mode
+```
+
+### Thinking Mode 🆕
+```bash
+Alt+T (Option+T on Mac)     # Toggle thinking (changed from Tab)
+"ultrathink: [question]"    # Max thinking budget
+```
+
+### Background Tasks 🆕
+```bash
+& run tests                 # Run in background
+& deploy to staging         # Background deployment
 ```
 
 ---
 
-## 🛠️ Essential Commands
+## Best Models (December 2025)
 
-### Navigation
-- `Tab` - Autocomplete files/commands
-- `Ctrl+C` - Interrupt Claude
-- `Ctrl+R` - View full transcript
-- `Ctrl+B` - Run command in background
+### Claude Opus 4.5 🆕
+- **Best for**: Complex refactors, architecture, planning
+- **Performance**: 80.9% SWE-bench (world's best)
+- **Cost**: $5 input / $25 output per million tokens
+- **Efficiency**: 65% fewer tokens than previous versions
 
-### Context
-- `/status` - View context usage
-- `/context` - Debug context details
-- `/clear` - Wipe conversation
-- `/compact` - Smart summarization
-- `/rewind` - Roll back changes
+### Claude Sonnet 4.5
+- **Best for**: Regular development, iterations, testing
+- **Speed**: Fast and efficient
+- **Cost**: Lower than Opus
 
-### Project
-- `/add-dir` - Add working directory
-- `/permissions` - Manage tool access
-- `/memory` - Edit memory files
-
-### Models
-- `/model` - Switch models (Opus 4 / Sonnet 4)
-- `/cost` - View usage costs
+### Pro Tip
+Plan with Opus (Shift+Tab), then switch to Sonnet for execution (Alt+P)
 
 ---
 
-## 📁 File Structure
+## Project Setup
 
-```
-your-project/
-├── .claude/
-│   ├── CLAUDE.md              ← START HERE!
-│   ├── settings.json
-│   ├── commands/
-│   │   ├── component.md
-│   │   └── api.md
-│   └── agents/
-│       ├── test-agent.md
-│       └── security-agent.md
-├── .mcp.json                  ← MCP config
-└── .gitignore                 ← Add .env
-```
-
----
-
-## 📄 Create CLAUDE.md
-
-**This is the #1 most important file!**
-
+### 1. Create CLAUDE.md
 ```markdown
-# Project: [Name]
+# Project Context
+
+## Overview
+[Project description]
 
 ## Tech Stack
-- Framework: Next.js 14
-- Language: TypeScript
-- Database: PostgreSQL
-- Styling: Tailwind CSS
+- Language: [e.g., TypeScript]
+- Framework: [e.g., React]
+- Testing: [e.g., Jest]
 
-## Code Standards
-- Use functional components
-- Props interface above component
-- Max 150 lines per file
-- Tests required for all features
+## Key Files
+- Main entry: src/index.ts
+- Config: config/app.json
 
-## Commands
-- `npm run dev` - Start server
-- `npm test` - Run tests
-```
-
----
-
-## 🎨 Good Prompts
-
-### ❌ Bad
-```
-Add auth
-```
-
-### ✅ Good
-```
-I need to add JWT authentication to my Express app.
-
-Requirements:
-1. Login and signup endpoints
-2. Password hashing with bcrypt
-3. JWT token generation
-4. Middleware to protect routes
-5. Store users in PostgreSQL
-
-Please create a plan first, then implement.
-```
-
----
-
-## 🔧 Keyboard Shortcuts
-
-| Key | Action |
-|-----|--------|
-| `Enter` | Submit |
-| `Ctrl+C` | Interrupt |
-| `Ctrl+R` | Toggle transcript |
-| `Ctrl+O` | Full transcript |
-| `Ctrl+B` | Background command |
-| `Ctrl+_` | Undo input |
-| `Tab` | Autocomplete |
-| `Shift+Tab` | Toggle auto-accept |
-| `Esc` | Cancel dialog |
-
----
-
-## 🐛 Emergency Recovery
-
+## Development
 ```bash
-# Something went wrong?
-
-# Option 1: Rewind in Claude
-/rewind
-# Select checkpoint
-
-# Option 2: Git reset
-git reset --hard HEAD
-
-# Option 3: Specific file
-git checkout HEAD -- file.ts
+npm run dev    # Start dev server
+npm test       # Run tests
 ```
 
----
+## Rules 🆕
+See .claude/rules/ for coding standards
+```
 
-## 🎓 Day 1 Checklist
-
-- [ ] Install Claude Code
-- [ ] Authenticate (Max/Pro/API)
-- [ ] Navigate to your project
-- [ ] Create `.claude/CLAUDE.md`
-- [ ] Run first request: "Create a hello world endpoint"
-- [ ] Check `/status` frequently
-- [ ] Create a feature branch
-- [ ] Practice `/rewind`
-
----
-
-## 💡 Pro Tips
-
-### 1. Always Plan Complex Features
+### 2. Optional: Create .claude/rules/ 🆕
 ```bash
-> Think through how we should implement caching
-# Wait for plan
-> That looks good, implement it
+mkdir -p .claude/rules
 ```
 
-### 2. Use Feature Branches
+Create files like:
+- `coding-style.md` - Style guidelines
+- `testing.md` - Test requirements  
+- `security.md` - Security rules
+
+---
+
+## Common Workflows
+
+### Feature Development
 ```bash
-git checkout -b feature/X  # ALWAYS
-# Never work on main
+# 1. Start named session
+claude --session-id feature-auth
+
+# 2. Plan with Opus (Shift+Tab twice)
+"Ultrathink: Design OAuth2 authentication"
+
+# 3. Review and approve plan
+
+# 4. Switch to Sonnet (Alt+P)
+
+# 5. Implement
+"Implement the OAuth flow from the plan"
+
+# 6. Test in background
+& run integration tests
 ```
 
-### 3. Checkpoint Critical Moments
-```bash
-> Create checkpoint "before risky refactor"
-# Try something
-# Didn't work?
-/rewind
+### Bug Fixing with LSP 🆕
+```
+"Find all references to authenticateUser"
+"Show me where this error is thrown"
+"Update all calls to use the new signature"
 ```
 
-### 4. Clear Between Features
-```bash
-> Feature X is complete!
-/clear
-> Now let's build feature Y
+### Code Review
 ```
-
-### 5. Monitor Context
-```bash
-# Add this to your workflow:
-# Check every 10-15 minutes
-/status
+"Review the changes in this PR for security issues"
+"Check for performance problems"
+"Suggest improvements"
 ```
 
 ---
 
-## 🔗 Quick Links
+## LSP Integration 🆕
 
-- **Docs**: https://docs.claude.com/claude-code
-- **Changelog**: https://claudelog.com/claude-code-changelog/
-- **Support**: https://support.claude.com
-- **Community**: r/ClaudeCode
+Claude now has IDE-level code intelligence:
 
----
+**Automatic Actions:**
+- Go to definition
+- Find all references
+- Show documentation
+- Navigate symbols
 
-## 📊 What to Expect
-
-### Week 1
-- Learning curve: Moderate
-- Productivity: Same as normal
-- Best practices: Basic
-
-### Week 2
-- Learning curve: Comfortable
-- Productivity: +20%
-- Best practices: Intermediate
-
-### Week 4
-- Learning curve: Proficient
-- Productivity: +30-50%
-- Best practices: Advanced
-
----
-
-## ⚠️ Common Mistakes
-
-1. **Not creating CLAUDE.md** ← Most common!
-2. Working directly on main branch
-3. Ignoring context warnings
-4. Not planning complex features
-5. Forgetting to `/clear` between features
-6. Not reviewing diffs before accepting
-7. Treating Claude like Google (be specific!)
-
----
-
-## 🎯 Success Formula
-
+**Just ask naturally:**
 ```
-Great CLAUDE.md
-    +
-Context Management
-    +
-Planning First
-    +
-Feature Branches
-    +
-Consistent Practice
-    =
-30-50% Productivity Gain
+"Find where UserService is defined"
+"Show all files that import this module"
+"What does this function do?"
 ```
 
+**Supported Languages:**
+TypeScript, Python, Rust, Go, Java, Kotlin, C/C++, PHP, Ruby, C#, PowerShell, HTML/CSS
+
 ---
 
-## 📞 Getting Help
+## Quick Tips
 
+### Context Management
+- Keep context <80% (check with `/context`)
+- Use `/clear` when switching tasks
+- Remove unused files from context
+
+### Named Sessions 🆕
+- Always name important sessions: `/rename feature-name`
+- Easy to resume later: `claude --resume feature-name`
+- Fork sessions to try alternatives
+
+### Background Work 🆕
+- Long tests: `& run full test suite`
+- Builds: `& npm run build`
+- Deployments: `& deploy to staging`
+
+### Permissions
+- Review: `/permissions`
+- Search: Press `/` in permissions menu
+- Wildcard MCP: `mcp__server__*` to allow/deny all
+
+### Cost Optimization
+- Opus 4.5 for complex work (efficient now!)
+- Sonnet for regular tasks
+- Monitor with `/stats`
+
+---
+
+## Keyboard Shortcuts
+
+### New in December 2025
+- **Alt+T** / **Option+T**: Toggle thinking (was Tab)
+- **Alt+P** / **Option+P**: Switch models while typing
+
+### Standard
+- **Shift+Tab**: Toggle plan mode
+- **Ctrl+C**: Cancel operation
+- **Escape**: Stop Claude
+- **Up/Down**: Navigate history
+- **Ctrl+R**: Search history
+
+---
+
+## Troubleshooting
+
+### LSP Not Working 🆕
 ```bash
-# Built-in diagnostics
+# Check language server installed
+which typescript-language-server
+which rust-analyzer
+which pylsp
+
+# Try /doctor
 /doctor
+```
 
-# Check what Claude knows
-> What do you know about this project?
+### Named Sessions Not Saving 🆕
+```bash
+# Check directory
+ls -la ~/.claude
 
-# Ask for clarification
-> Can you explain that approach in more detail?
+# Try explicit session ID
+claude --session-id test-session
+```
+
+### High Context Usage
+```bash
+/context              # See what's using tokens
+/clear                # Reset context
+```
+
+### Slow Responses
+- Clear context: `/clear`
+- Use Sonnet instead of Opus
+- Remove large files from context
+
+---
+
+## Resources
+
+- **Main Guide**: [claude-code-best-practices-2025.md](claude-code-best-practices-2025.md)
+- **Changelog**: [CHANGELOG.md](CHANGELOG.md)
+- **Official Docs**: https://docs.claude.com
+- **Community**: r/ClaudeAI on Reddit
+
+---
+
+## Quick Reference Card
+
+```
+┌─────────────────────────────────────────────┐
+│ ESSENTIAL SHORTCUTS                         │
+├─────────────────────────────────────────────┤
+│ Alt+T        Toggle thinking (NEW)          │
+│ Alt+P        Switch models (NEW)            │
+│ Shift+Tab    Plan mode                      │
+│ /rename      Name session (NEW)             │
+│ /resume      Continue session (NEW)         │
+│ /clear       Reset context                  │
+│ /context     Check usage                    │
+│ /stats       View statistics (NEW)          │
+│ & command    Background task (NEW)          │
+└─────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────┐
+│ MODEL SELECTION                             │
+├─────────────────────────────────────────────┤
+│ Opus 4.5     Complex, planning, architecture│
+│ Sonnet 4.5   Regular dev, fast iteration   │
+│ Haiku 4.5    Simple, repetitive tasks      │
+└─────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────┐
+│ PRO TIPS                                    │
+├─────────────────────────────────────────────┤
+│ 1. Name every session (/rename)            │
+│ 2. Plan with Opus, code with Sonnet        │
+│ 3. Use LSP for code navigation              │
+│ 4. Background tasks for tests/builds        │
+│ 5. Monitor usage with /stats                │
+└─────────────────────────────────────────────┘
 ```
 
 ---
 
-**Print this, pin it near your desk, refer to it often!**
-
-*Happy coding! 🚀*
+**Updated**: December 2025 with Opus 4.5, LSP, Named Sessions, Background Agents
