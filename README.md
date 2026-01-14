@@ -77,6 +77,7 @@ The most comprehensive Claude Code resource available, including:
 
 * **[CLAUDE.md Template](CLAUDE.md.template)** - Project context file
 * **[Command Examples](commands/examples)** - Common automation patterns
+* **[Now-Next Methodology](https://github.com/soutone/now-next-methodology)** - Two-file task management (NOW.md + NEXT.md) for maintaining focus and momentum with `/next` command
 
 ---
 
