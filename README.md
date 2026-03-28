@@ -79,6 +79,10 @@ The most comprehensive Claude Code resource available, including:
 * **[Command Examples](commands/examples)** - Common automation patterns
 * **[Now-Next Methodology](https://github.com/soutone/now-next-methodology)** - Two-file task management (NOW.md + NEXT.md) for maintaining focus and momentum with `/next` command
 
+### Community Tools
+
+* **[claude-dash](https://github.com/krabat-l/claude-dash)** - Real-time statusline for Claude Code showing context, cost, quota, cache, tools, and git status
+
 ---
 
 ## 🎓 Learning Paths
